@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-group :sinatra do
-  gem 'sinatra'
-  gem 'sinatra-contrib'
-end
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'hamlit'
 
 group :development do
   gem 'foreman'
