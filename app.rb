@@ -39,15 +39,21 @@ get '/' do
   haml :index
 end
 
-get '/lighting/on' do
-  flash[:message] = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
-  session[:lighting_status] = true;
-  redirect '/'
-end
+get '/lighting/:switch' do
+  unless logged_in?
+    session[:redirect] = request.url
+    redirect '/join'
+  end
 
-get '/lighting/off' do
-  flash[:message] = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
-  session[:lighting_status] = false;
+  if params['switch'] === 'on'
+    session[:lighting_status] = true;
+    message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
+  elsif params['switch'] === 'off'
+    session[:lighting_status] = false;
+    message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+  end
+
+  flash[:message] = message
   redirect '/'
 end
 
@@ -63,5 +69,10 @@ end
 get '/auth/twitter/callback' do
   session[:twitter_oauth] = env['omniauth.auth'][:credentials]
   session[:screen_name] = env['omniauth.auth'][:info][:nickname]
-  redirect to('/')
+
+  if session[:redirect]
+    redirect session[:redirect]
+  else
+    redirect '/'
+  end
 end

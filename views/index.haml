@@ -1,29 +1,21 @@
 %h1
   Yo, #{ENV['RACK_ENV']}
-- if logged_in?
-  - if flash[:message]
-    %p
-      = flash[:message]
+- if flash[:message]
   %p
-    - if session[:lighting_status] === nil
-      %a{href: '/lighting/on'}
-        ON
-      %a{href: '/lighting/off'}
-        OFF
-    - elsif session[:lighting_status]
-      %span
-        ON
-      %a{href: '/lighting/off'}
-        OFF
-    - else
-      %a{href: '/lighting/on'}
-        ON
-      %span
-        OFF
-  %p
-    %a{href: '/exit'}
-      Logout
-- else
-  %p
-    %a{href: '/join'}
-      Sign in with Twitter
+    = flash[:message]
+%p
+  - if session[:lighting_status] === nil
+    %a{href: '/lighting/on'}
+      ON
+    %a{href: '/lighting/off'}
+      OFF
+  - elsif session[:lighting_status]
+    %span
+      ON
+    %a{href: '/lighting/off'}
+      OFF
+  - else
+    %a{href: '/lighting/on'}
+      ON
+    %span
+      OFF
