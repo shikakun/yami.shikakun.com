@@ -7,6 +7,6 @@
 ## Development
 
 ```bash
-$ bundle install --path vendor/bundle
+$ bundle install --path vendor/bundle --without production
 $ bundle exec foreman start
 ```
