@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require "sinatra/reloader" if development?
+require 'sinatra/flash'
 require 'hamlit'
 require 'dotenv'
 require 'omniauth-twitter'
@@ -36,6 +37,18 @@ end
 
 get '/' do
   haml :index
+end
+
+get '/lighting/on' do
+  flash[:message] = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
+  session[:lighting_status] = true;
+  redirect '/'
+end
+
+get '/lighting/off' do
+  flash[:message] = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+  session[:lighting_status] = false;
+  redirect '/'
 end
 
 get '/join' do
