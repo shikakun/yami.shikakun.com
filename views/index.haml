@@ -1,2 +1,12 @@
 %h1
   Yo, #{ENV['RACK_ENV']}
+- if logged_in?
+  %p
+    = session[:screen_name]
+  %p
+    %a{href: '/exit'}
+      Logout
+- else
+  %p
+    %a{href: '/join'}
+      Sign in with Twitter
