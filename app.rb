@@ -9,6 +9,9 @@ require 'twitter'
 set :haml, format: :html5
 Dotenv.load
 
+enable :sessions
+set :session_secret, ENV['SESSION_SECRET']
+
 configure do
   enable :sessions
   use OmniAuth::Builder do
