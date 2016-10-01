@@ -25,6 +25,10 @@ helpers do
     session[:twitter_oauth]
   end
 
+  def shikakun?
+    session[:screen_name] === 'shikakun'
+  end
+
   def twitter
     Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
@@ -75,4 +79,18 @@ get '/auth/twitter/callback' do
   else
     redirect '/'
   end
+end
+
+get '/admin' do
+  unless logged_in?
+    session[:redirect] = request.url
+    redirect '/join'
+  end
+
+  unless shikakun?
+    flash[:message] = 'あんた鹿じゃないね'
+    redirect '/'
+  end
+
+  haml :admin
 end
