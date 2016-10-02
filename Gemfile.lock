@@ -2,8 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
+    args_parser (0.2.0)
     backports (3.6.8)
     buftok (0.2.0)
+    dnssd (3.0.1)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
@@ -26,10 +28,19 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
+    irkit (0.1.0)
+      args_parser
+      dnssd
+      hashie
+      httparty
+      json
     json (1.8.3)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     multi_json (1.12.1)
+    multi_xml (0.5.5)
     multipart-post (2.0.0)
     naught (1.1.0)
     oauth (0.5.1)
@@ -87,6 +98,7 @@ DEPENDENCIES
   dotenv
   foreman
   hamlit
+  irkit
   omniauth-twitter
   sinatra
   sinatra-contrib
@@ -94,4 +106,4 @@ DEPENDENCIES
   twitter
 
 BUNDLED WITH
-   1.12.5
+   1.13.2

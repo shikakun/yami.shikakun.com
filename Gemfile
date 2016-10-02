@@ -7,6 +7,7 @@ gem 'dotenv'
 gem 'twitter'
 gem 'omniauth-twitter'
 gem 'sinatra-flash'
+gem 'irkit'
 
 group :development do
   gem 'foreman'
