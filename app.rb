@@ -46,18 +46,28 @@ get '/lighting/:switch' do
     redirect '/join'
   end
 
-  irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
-
   if params['switch'] === 'on'
-    session[:lighting_status] = true;
+    session[:lighting_status] = true
+    irdata = IRKit::App::Data['IR']['lighting_on']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
   elsif params['switch'] === 'off'
-    session[:lighting_status] = false;
+    session[:lighting_status] = false
+    irdata = IRKit::App::Data['IR']['lighting_off']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+  else
+    redirect '/'
   end
 
   flash[:message] = message
-  redirect '/'
+
+  irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
+  res = irkit.post_messages(irdata)
+  case res.code
+  when 200
+    redirect '/'
+  else
+    raise res
+  end
 end
 
 get '/join' do
