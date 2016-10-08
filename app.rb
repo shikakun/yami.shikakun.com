@@ -37,6 +37,8 @@ helpers do
 end
 
 get '/' do
+  @hikari = IRKit::App::Data['IR']['lighting_on']
+  @yami   = IRKit::App::Data['IR']['lighting_off']
   haml :index
 end
 
