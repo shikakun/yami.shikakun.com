@@ -9,6 +9,7 @@ gem 'hamlit'
 gem 'dotenv'
 gem 'twitter'
 gem 'omniauth-twitter'
+gem 'irkit'
 
 group :production do
   gem 'pg'

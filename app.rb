@@ -6,15 +6,16 @@ require 'hamlit'
 require 'dotenv'
 require 'omniauth-twitter'
 require 'twitter'
-
-set :haml, format: :html5
-Dotenv.load
-
-enable :sessions
-set :session_secret, ENV['SESSION_SECRET']
+require 'irkit'
 
 configure do
+  Dotenv.load
+
   enable :sessions
+  set :session_secret, ENV['SESSION_SECRET']
+
+  set :haml, format: :html5
+
   use OmniAuth::Builder do
     provider :twitter, ENV['TWITTER_CONSUMER_KEY'], ENV['TWITTER_CONSUMER_SECRET']
   end
@@ -40,25 +41,41 @@ helpers do
 end
 
 get '/' do
+  @hikari = IRKit::App::Data['IR']['lighting_on']
+  @yami   = IRKit::App::Data['IR']['lighting_off']
   haml :index
 end
 
-get '/lighting/:switch' do
+get '/hikari', '/yami' do
   unless logged_in?
     session[:redirect] = request.url
     redirect '/join'
   end
 
-  if params['switch'] === 'on'
-    session[:lighting_status] = true;
+  param = request.path_info
+
+  if param === '/hikari'
+    session[:lighting_status] = true
+    irdata = IRKit::App::Data['IR']['lighting_on']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
-  elsif params['switch'] === 'off'
-    session[:lighting_status] = false;
+  elsif param === '/yami'
+    session[:lighting_status] = false
+    irdata = IRKit::App::Data['IR']['lighting_off']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+  else
+    redirect '/'
   end
 
   flash[:message] = message
+
+  irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
+  res = irkit.post_messages(irdata)
+  case res.code
+  when 200
   redirect '/'
+  else
+    raise res
+  end
 end
 
 get '/join' do
