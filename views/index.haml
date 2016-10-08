@@ -5,17 +5,17 @@
     = flash[:message]
 %p
   - if session[:lighting_status] === nil
-    %a{href: '/lighting/on'}
+    %a{href: '/hikari'}
       ON
-    %a{href: '/lighting/off'}
+    %a{href: '/yami'}
       OFF
   - elsif session[:lighting_status]
     %span
       ON
-    %a{href: '/lighting/off'}
+    %a{href: '/yami'}
       OFF
   - else
-    %a{href: '/lighting/on'}
+    %a{href: '/hikari'}
       ON
     %span
       OFF

@@ -40,17 +40,19 @@ get '/' do
   haml :index
 end
 
-get '/lighting/:switch' do
+get '/hikari', '/yami' do
   unless logged_in?
     session[:redirect] = request.url
     redirect '/join'
   end
 
-  if params['switch'] === 'on'
+  param = request.path_info
+
+  if param === '/hikari'
     session[:lighting_status] = true
     irdata = IRKit::App::Data['IR']['lighting_on']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
-  elsif params['switch'] === 'off'
+  elsif param === '/yami'
     session[:lighting_status] = false
     irdata = IRKit::App::Data['IR']['lighting_off']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
@@ -64,7 +66,7 @@ get '/lighting/:switch' do
   res = irkit.post_messages(irdata)
   case res.code
   when 200
-    redirect '/'
+  redirect '/'
   else
     raise res
   end
