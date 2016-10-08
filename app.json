@@ -1,0 +1,27 @@
+{
+  "name": "yami.shikakun.com",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
+    "SESSION_SECRET": {
+      "description": ""
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "description": ""
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": ""
+    },
+    "TWITTER_SHIKAKUN_TOKEN": {
+      "description": ""
+    },
+    "TWITTER_SHIKAKUN_TOKEN_SECRET": {
+      "description": ""
+    },
+    "IRKIT_CLIENTKEY": {
+      "description": ""
+    },
+    "IRKIT_DEVICEID": {
+      "description": ""
+    }
+  }
+}
