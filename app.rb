@@ -26,6 +26,11 @@ helpers do
     session[:twitter_oauth]
   end
 
+  def paid?
+    paid_brothers = ['shikakun']
+    paid_brothers.include?(session[:screen_name])
+  end
+
   def shikakun?
     session[:screen_name] === 'shikakun'
   end
