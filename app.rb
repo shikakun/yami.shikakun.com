@@ -6,10 +6,11 @@ require 'hamlit'
 require 'dotenv'
 require 'omniauth-twitter'
 require 'twitter'
+require 'irkit'
 
 configure do
   Dotenv.load
-  
+
   enable :sessions
   set :session_secret, ENV['SESSION_SECRET']
 
@@ -44,6 +45,8 @@ get '/lighting/:switch' do
     session[:redirect] = request.url
     redirect '/join'
   end
+
+  irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
 
   if params['switch'] === 'on'
     session[:lighting_status] = true;
