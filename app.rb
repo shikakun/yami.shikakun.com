@@ -7,14 +7,14 @@ require 'dotenv'
 require 'omniauth-twitter'
 require 'twitter'
 
-set :haml, format: :html5
-Dotenv.load
-
-enable :sessions
-set :session_secret, ENV['SESSION_SECRET']
-
 configure do
+  Dotenv.load
+  
   enable :sessions
+  set :session_secret, ENV['SESSION_SECRET']
+
+  set :haml, format: :html5
+
   use OmniAuth::Builder do
     provider :twitter, ENV['TWITTER_CONSUMER_KEY'], ENV['TWITTER_CONSUMER_SECRET']
   end
