@@ -57,6 +57,10 @@ get '/hikari', '/yami' do
     redirect '/join'
   end
 
+  unless paid?
+    redirect '/kanekure'
+  end
+
   param = request.path_info
 
   if param === '/hikari'
@@ -81,6 +85,13 @@ get '/hikari', '/yami' do
   else
     raise res
   end
+end
+
+get '/kanekure' do
+  redirect '/' unless logged_in?
+  redirect '/' if paid?
+
+  haml :kanekure
 end
 
 get '/join' do
