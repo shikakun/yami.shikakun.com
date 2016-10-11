@@ -41,6 +41,10 @@ helpers do
     session[:screen_name] === 'shikakun'
   end
 
+  def current_status
+    Activity.last.status
+  end
+
   def japanese_status(status)
     case status
     when 'hikari'

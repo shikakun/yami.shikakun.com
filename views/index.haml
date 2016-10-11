@@ -4,12 +4,7 @@
   %p
     = flash[:message]
 %p
-  - if session[:lighting_status] === nil
-    %a{href: '/hikari'}
-      ON
-    %a{href: '/yami'}
-      OFF
-  - elsif session[:lighting_status]
+  - if current_status === 'hikari'
     %span
       ON
     %a{href: '/yami'}
@@ -19,6 +14,9 @@
       ON
     %span
       OFF
+
+%p
+  = current_status
 
 %ul
   - @activities.each do |activity|
