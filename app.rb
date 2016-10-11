@@ -51,10 +51,6 @@ helpers do
   end
 end
 
-class Brother < ActiveRecord::Base
-
-end
-
 get '/' do
   @hikari = IRKit::App::Data['IR']['lighting_on']
   @yami   = IRKit::App::Data['IR']['lighting_off']
@@ -140,12 +136,16 @@ get '/admin' do
   haml :admin
 end
 
-post '/admin/new' do
-  Brother.create({:screen_name => params[:screen_name]})
-  redirect '/admin'
-end
+post '/admin/:action' do |action|
+  unless logged_in? || shikakun?
+    redirect '/'
+  end
 
-post '/admin/delete' do
-  Brother.find(params[:id]).destroy
+  if action === 'new'
+    Brother.create({:screen_name => params[:screen_name]})
+  elsif action === 'delete'
+    Brother.find(params[:id]).destroy
+  end
+
   redirect '/admin'
 end
