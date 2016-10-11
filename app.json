@@ -5,6 +5,9 @@
     "SESSION_SECRET": {
       "description": ""
     },
+    "DATABASE_URL": {
+      "description": ""
+    },
     "TWITTER_CONSUMER_KEY": {
       "description": ""
     },
