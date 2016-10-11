@@ -41,6 +41,15 @@ helpers do
     session[:screen_name] === 'shikakun'
   end
 
+  def japanese_status(status)
+    case status
+    when 'hikari'
+      '点けました'
+    when 'yami'
+      '消しました'
+    end
+  end
+
   def twitter
     Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
@@ -51,7 +60,15 @@ helpers do
   end
 end
 
+class Activity < ActiveRecord::Base
+end
+
+class Brother < ActiveRecord::Base
+end
+
 get '/' do
+  @activities = Activity.order("id desc").all
+
   @hikari = IRKit::App::Data['IR']['lighting_on']
   @yami   = IRKit::App::Data['IR']['lighting_off']
   haml :index
@@ -73,10 +90,12 @@ get '/hikari', '/yami' do
     session[:lighting_status] = true
     irdata = IRKit::App::Data['IR']['lighting_on']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
+    Activity.create({screen_name: session[:screen_name], status: 'hikari'})
   elsif param === '/yami'
     session[:lighting_status] = false
     irdata = IRKit::App::Data['IR']['lighting_off']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+    Activity.create({screen_name: session[:screen_name], status: 'yami'})
   else
     redirect '/'
   end
@@ -87,7 +106,7 @@ get '/hikari', '/yami' do
   res = irkit.post_messages(irdata)
   case res.code
   when 200
-  redirect '/'
+    redirect '/'
   else
     raise res
   end

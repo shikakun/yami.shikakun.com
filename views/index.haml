@@ -20,6 +20,13 @@
     %span
       OFF
 
+%ul
+  - @activities.each do |activity|
+    %li
+      %a{href: "https://twitter.com/#{activity.screen_name}", target: '_blank'}<>
+        @#{activity.screen_name}
+      が鹿の自宅の照明を#{japanese_status(activity.status)}
+
 %p
   hikari: #{@hikari}
 %p
