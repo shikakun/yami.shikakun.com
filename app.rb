@@ -30,7 +30,10 @@ helpers do
   end
 
   def paid?
-    paid_brothers = ['shikakun']
+    paid_brothers = []
+    Brother.order("id desc").all.each do |brother|
+      paid_brothers.push(brother.screen_name)
+    end
     paid_brothers.include?(session[:screen_name])
   end
 
