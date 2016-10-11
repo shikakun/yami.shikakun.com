@@ -2,11 +2,14 @@ require 'sinatra'
 require 'sinatra/contrib'
 require "sinatra/reloader" if development?
 require 'sinatra/flash'
+require 'active_record'
 require 'hamlit'
 require 'dotenv'
 require 'omniauth-twitter'
 require 'twitter'
 require 'irkit'
+
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'sqlite3:db/development.db')
 
 configure do
   Dotenv.load
@@ -24,6 +27,18 @@ end
 helpers do
   def logged_in?
     session[:twitter_oauth]
+  end
+
+  def paid?
+    paid_brothers = []
+    Brother.order("id desc").all.each do |brother|
+      paid_brothers.push(brother.screen_name)
+    end
+    paid_brothers.include?(session[:screen_name])
+  end
+
+  def shikakun?
+    session[:screen_name] === 'shikakun'
   end
 
   def twitter
@@ -46,6 +61,10 @@ get '/hikari', '/yami' do
   unless logged_in?
     session[:redirect] = request.url
     redirect '/join'
+  end
+
+  unless paid?
+    redirect '/kanekure'
   end
 
   param = request.path_info
@@ -74,6 +93,13 @@ get '/hikari', '/yami' do
   end
 end
 
+get '/kanekure' do
+  redirect '/' unless logged_in?
+  redirect '/' if paid?
+
+  haml :kanekure
+end
+
 get '/join' do
   redirect '/auth/twitter'
 end
@@ -92,4 +118,34 @@ get '/auth/twitter/callback' do
   else
     redirect '/'
   end
+end
+
+get '/admin' do
+  unless logged_in?
+    session[:redirect] = request.url
+    redirect '/join'
+  end
+
+  unless shikakun?
+    flash[:message] = 'あんた鹿じゃないね'
+    redirect '/'
+  end
+
+  @brothers = Brother.order("id desc").all
+
+  haml :admin
+end
+
+post '/admin/:action' do |action|
+  unless logged_in? || shikakun?
+    redirect '/'
+  end
+
+  if action === 'new'
+    Brother.create({:screen_name => params[:screen_name]})
+  elsif action === 'delete'
+    Brother.find(params[:id]).destroy
+  end
+
+  redirect '/admin'
 end

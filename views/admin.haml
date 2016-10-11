@@ -1,0 +1,21 @@
+%h1
+  Yo, shikakun!
+%ul
+  - @brothers.each do |brother|
+    %li
+      %span
+        #{brother.id}:&nbsp;
+      %span
+        = brother.screen_name
+      %span<>
+        (
+      %span<>
+        %form{action: '/admin/delete', method: 'post', style: 'display: inline-block;'}
+          %input{type: 'hidden', name: 'id', value: brother.id}
+          %input{type: 'submit', value: 'Remove'}
+      %span<>
+        )
+
+%form{action: '/admin/new', method: 'post'}
+  %input{type: 'text', name: 'screen_name'}
+  %input{type: 'submit', value: 'Add'}
