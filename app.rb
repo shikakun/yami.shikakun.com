@@ -72,9 +72,6 @@ end
 
 get '/' do
   @activities = Activity.order("id desc").all
-
-  @hikari = IRKit::App::Data['IR']['lighting_on']
-  @yami   = IRKit::App::Data['IR']['lighting_off']
   haml :index
 end
 
@@ -91,12 +88,10 @@ get '/hikari', '/yami' do
   param = request.path_info
 
   if param === '/hikari'
-    session[:lighting_status] = true
     irdata = IRKit::App::Data['IR']['lighting_on']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
     Activity.create({screen_name: session[:screen_name], status: 'hikari'})
   elsif param === '/yami'
-    session[:lighting_status] = false
     irdata = IRKit::App::Data['IR']['lighting_off']
     message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
     Activity.create({screen_name: session[:screen_name], status: 'yami'})
@@ -150,7 +145,6 @@ get '/admin' do
   end
 
   unless shikakun?
-    flash[:message] = 'あんた鹿じゃないね'
     redirect '/'
   end
 

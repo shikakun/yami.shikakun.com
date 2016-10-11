@@ -1,22 +1,13 @@
-%h1
-  Yo, #{ENV['RACK_ENV']}
 - if flash[:message]
   %p
     = flash[:message]
 %p
   - if current_status === 'hikari'
-    %span
-      ON
     %a{href: '/yami'}
       OFF
   - else
     %a{href: '/hikari'}
       ON
-    %span
-      OFF
-
-%p
-  = current_status
 
 %ul
   - @activities.each do |activity|
@@ -24,8 +15,3 @@
       %a{href: "https://twitter.com/#{activity.screen_name}", target: '_blank'}<>
         @#{activity.screen_name}
       が鹿の自宅の照明を#{japanese_status(activity.status)}
-
-%p
-  hikari: #{@hikari}
-%p
-  yami: #{@yami}
