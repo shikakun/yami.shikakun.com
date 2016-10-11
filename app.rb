@@ -2,11 +2,14 @@ require 'sinatra'
 require 'sinatra/contrib'
 require "sinatra/reloader" if development?
 require 'sinatra/flash'
+require 'active_record'
 require 'hamlit'
 require 'dotenv'
 require 'omniauth-twitter'
 require 'twitter'
 require 'irkit'
+
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'sqlite3:db/development.db')
 
 configure do
   Dotenv.load
@@ -43,6 +46,10 @@ helpers do
       config.access_token_secret = ENV['TWITTER_SHIKAKUN_TOKEN_SECRET']
     end
   end
+end
+
+class Brother < ActiveRecord::Base
+
 end
 
 get '/' do
@@ -125,5 +132,17 @@ get '/admin' do
     redirect '/'
   end
 
+  @brothers = Brother.order("id desc").all
+
   haml :admin
+end
+
+post '/admin/new' do
+  Brother.create({:screen_name => params[:screen_name]})
+  redirect '/admin'
+end
+
+post '/admin/delete' do
+  Brother.find(params[:id]).destroy
+  redirect '/admin'
 end

@@ -1,3 +1,4 @@
 .bundle
 .env
+db/development.db
 vendor/bundle
