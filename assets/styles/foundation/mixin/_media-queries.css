@@ -1,0 +1,33 @@
+$breakpoint-medium-screen : 768px;
+$breakpoint-large-screen  : (1000px + 30px * 2);
+
+@mixin if-small-screen-under {
+  @media screen and (max-width: ($breakpoint-medium-screen - 1px)) {
+    @content;
+  }
+}
+@mixin if-medium-screen-upper {
+  @media screen and (min-width: $breakpoint-medium-screen) {
+    @content;
+  }
+}
+@mixin if-medium-screen-under {
+  @media screen and (max-width: ($breakpoint-large-screen - 1px)) {
+    @content;
+  }
+}
+@mixin if-large-screen-upper {
+  @media screen and (min-width: $breakpoint-large-screen) {
+    @content;
+  }
+}
+@mixin if-retina {
+  @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+@mixin if-320px-screen-under {
+  @media screen and (max-width: 320px) {
+    @content;
+  }
+}
