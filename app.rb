@@ -101,6 +101,10 @@ get '/hikari', '/yami' do
 
   flash[:message] = message
 
+  if ENV['RACK_ENV'] === 'development'
+    redirect '/'
+  end
+
   irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
   res = irkit.post_messages(irdata)
   case res.code
