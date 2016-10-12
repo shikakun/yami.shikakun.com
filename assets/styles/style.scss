@@ -1,5 +1,39 @@
 @import 'vendor/normalize.css/normalize';
+@import 'foundation/reset';
 
-.shikakun {
-  display: flex;
+:root {
+  font-family: -apple-system, Segoe UI, sans-serif;
+  font-feature-settings: 'kern' 1, 'lnum' 1, 'pnum' 1;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.4rem;
+}
+
+figure {
+  position: relative;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100vh;
+  }
+
+  a {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 280px;
+    margin: -140px 0 0 -140px;
+    border-radius: 50%;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease;
+    &:hover {
+      box-shadow: 0 0 3rem rgba(#eee, 0.66), inset 0 0 3rem rgba(#eee, 0.66);
+    }
+  }
 }
