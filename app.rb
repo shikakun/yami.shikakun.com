@@ -42,7 +42,7 @@ helpers do
   end
 
   def current_status
-    Activity.last.status
+    Activity.last.status if Activity.last
   end
 
   def japanese_status(status)
