@@ -1,9 +1,8 @@
-%figure
-  - if current_status === 'hikari'
-    %img{src: '/images/hikari.jpg', srcset: '/images/hikari@2x.jpg', alt: ''}
+- if current_status === 'hikari'
+  %div.switch.switch--hikari
     %a{href: '/yami'}
-  - else
-    %img{src: '/images/yami.jpg', srcset: '/images/yami@2x.jpg', alt: ''}
+- else
+  %div.switch.switch--yami
     %a{href: '/hikari'}
 
 %ul

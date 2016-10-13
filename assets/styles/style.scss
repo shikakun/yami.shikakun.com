@@ -12,16 +12,32 @@ body {
   font-size: 1.4rem;
 }
 
-figure {
+.switch {
   position: relative;
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
+  &#{&}--hikari {
+    background-image: url(/images/hikari.jpg);
+    @include if-retina {
+      background-image: url(/images/hikari@2x.jpg);
+    }
     @include if-medium-screen-upper {
-      height: 100vh;
+      background-image: url(/images/hikari@2x.jpg);
+    }
+  }
+
+  &#{&}--yami {
+    background-image: url(/images/yami.jpg);
+    @include if-retina {
+      background-image: url(/images/yami@2x.jpg);
+    }
+    @include if-medium-screen-upper {
+      background-image: url(/images/yami@2x.jpg);
     }
   }
 
