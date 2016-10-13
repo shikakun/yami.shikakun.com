@@ -5,12 +5,62 @@
   %div.switch.switch--yami
     %a{href: '/hikari'}
 
-%ul
-  - @activities.each do |activity|
-    %li
+%p
+  - before_time = ''
+  - last_index  = @activities.size - 1
+  - @activities.each_with_index do |activity, index|
+    %span<>
+      -# まくら
+      - unless index === 0 || index === 1
+        - if [true, false].sample
+          %span<>
+            その
+        - else
+          - if [true, false].sample
+            %span<>
+              その
+          - else
+            - if [true, false].sample
+              %span<>
+                その
+            - else
+              %span<>
+                また
+
+      -# 時間の差分
+      - unless index === 0
+        %span<>
+          #{compare_time(before_time, activity.created_at)}
+
+      -# 名前
       %a{href: "https://twitter.com/#{activity.screen_name}", target: '_blank'}<>
         @#{activity.screen_name}
-      が鹿の自宅の照明を#{japanese_status(activity.status)}
+
+      -# 照明をどうした
+      %span<>
+        が鹿の自宅の照明を#{japanese_status(activity.status)}
+
+      -# コンティニュー
+      - unless index === last_index
+        - if [true, false].sample
+          %span<>
+            たあと、
+        - else
+          - if [true, false].sample
+            %span<>
+              て、
+          - else
+            - if [true, false].sample
+              %span<>
+                まして、
+            - else
+              %span<>
+                たりして、
+      - else
+        %span<>
+          ました。
+
+      - before_time = activity.created_at
 
 - if flash[:message]
   %p

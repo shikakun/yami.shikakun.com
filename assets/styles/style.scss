@@ -57,3 +57,15 @@ body {
     }
   }
 }
+
+p {
+  padding: 1.5em;
+  margin: 0;
+  text-align: justify;
+  line-height: 1.88;
+
+  a {
+    color: #000;
+    border-bottom: 1px solid currentColor;
+  }
+}
