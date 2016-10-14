@@ -58,11 +58,22 @@ body {
   }
 }
 
-p {
+.activity {
+  max-width: 96rem;
   padding: 1.5em;
-  margin: 0;
+  margin: 0 auto;
   text-align: justify;
   line-height: 1.88;
+  transition-property: padding, font-size;
+  transition-duration: 1s;
+  transition-timing-function: ease;
+  @include if-medium-screen-upper {
+    padding: 2em;
+    font-size: 1.6rem;
+  }
+  @include if-large-screen-upper {
+    font-size: 1.8rem;
+  }
 
   a {
     color: #000;
