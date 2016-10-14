@@ -32,22 +32,22 @@ body {
   background-position: center center;
 
   &#{&}--hikari {
-    background-image: url(/images/hikari.jpg);
+    background-image: url(/images/hikari.jpg?201610142126);
     @include if-retina {
-      background-image: url(/images/hikari@2x.jpg);
+      background-image: url(/images/hikari@2x.jpg?201610142126);
     }
     @include if-medium-screen-upper {
-      background-image: url(/images/hikari@3x.jpg);
+      background-image: url(/images/hikari@3x.jpg?201610142126);
     }
   }
 
   &#{&}--yami {
-    background-image: url(/images/yami.jpg);
+    background-image: url(/images/yami.jpg?201610142126);
     @include if-retina {
-      background-image: url(/images/yami@2x.jpg);
+      background-image: url(/images/yami@2x.jpg?201610142126);
     }
     @include if-medium-screen-upper {
-      background-image: url(/images/yami@3x.jpg);
+      background-image: url(/images/yami@3x.jpg?201610142126);
     }
   }
 
