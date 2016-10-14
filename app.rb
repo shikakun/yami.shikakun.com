@@ -74,15 +74,6 @@ helpers do
       ((diff + 180000) / (60 * 60 * 24 * 7)).to_i.to_s + '週間後に'
     end
   end
-
-  def twitter
-    Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_SHIKAKUN_TOKEN']
-      config.access_token_secret = ENV['TWITTER_SHIKAKUN_TOKEN_SECRET']
-    end
-  end
 end
 
 class Activity < ActiveRecord::Base
@@ -110,15 +101,23 @@ get '/hikari', '/yami' do
 
   if param === '/hikari'
     irdata = IRKit::App::Data['IR']['lighting_on']
-    message = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
+    tweet = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
     Activity.create({screen_name: session[:screen_name], status: 'hikari'})
   elsif param === '/yami'
     irdata = IRKit::App::Data['IR']['lighting_off']
-    message = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+    tweet = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
     Activity.create({screen_name: session[:screen_name], status: 'yami'})
   else
     redirect '/'
   end
+
+  twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
+    config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
+    config.access_token        = ENV['TWITTER_SHIKAKUN_TOKEN']
+    config.access_token_secret = ENV['TWITTER_SHIKAKUN_TOKEN_SECRET']
+  end
+  twitter_client.update(tweet)
 
   if ENV['RACK_ENV'] === 'development'
     redirect '/'
