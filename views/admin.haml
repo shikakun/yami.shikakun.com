@@ -12,11 +12,5 @@
       %span.brother__at-mark
         @
       = brother.screen_name
-      %span<>
-        (
-      %span<>
-        %form{action: '/admin/delete', method: 'post', style: 'display: inline-block;'}
-          %input{type: 'hidden', name: 'id', value: brother.id}
-          %input{type: 'submit', value: 'Remove'}
-      %span<>
-        )
+      %span.brother__delete-button.js-delete-brother{'data-brother-id': brother.id}
+        x

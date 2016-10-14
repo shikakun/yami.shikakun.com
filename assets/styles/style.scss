@@ -122,6 +122,7 @@ p {
 }
 
 .brother {
+  $this: &;
   width: 60rem;
   padding-bottom: 8rem;
   margin: 0 auto;
@@ -139,5 +140,21 @@ p {
     left: -4.5rem;
     height: 8rem;
     line-height: 8rem;
+  }
+
+  &__delete-button {
+    display: inline-block;
+    height: 8rem;
+    line-height: 8rem;
+    margin: 0 0.25em;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  &__item:hover {
+    #{$this}__delete-button {
+      opacity: 1;
+    }
   }
 }
