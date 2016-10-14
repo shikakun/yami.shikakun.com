@@ -1,11 +1,11 @@
 - if current_status === 'hikari'
   %div.switch.switch--hikari
-    %a{href: '/yami'}
+    %a.switch__button{href: '/yami'}
 - else
   %div.switch.switch--yami
-    %a{href: '/hikari'}
+    %a.switch__button{href: '/hikari'}
 
-%p.activity
+%p.lyric
   - before_time = ''
   - last_index  = @activities.size - 1
   - @activities.each_with_index do |activity, index|

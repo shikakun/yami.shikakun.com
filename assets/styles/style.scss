@@ -4,6 +4,7 @@
 
 :root {
   font-size: 62.5%;
+  font-weight: bold;
   font-family: 'Roboto', -apple-system, 'Segoe UI', sans-serif;
   font-feature-settings: 'kern' 1, 'lnum' 1, 'pnum' 1;
 }
@@ -41,7 +42,7 @@ body {
     }
   }
 
-  a {
+  &__button {
     display: block;
     position: absolute;
     top: 50%;
@@ -58,21 +59,22 @@ body {
   }
 }
 
-.activity {
-  max-width: 96rem;
+.lyric {
   padding: 1.5em;
   margin: 0 auto;
   text-align: justify;
+  font-size: 2rem;
   line-height: 1.88;
+  word-break: break-all;
   transition-property: padding, font-size;
   transition-duration: 1s;
   transition-timing-function: ease;
   @include if-medium-screen-upper {
     padding: 2em;
-    font-size: 1.6rem;
+    font-size: 2.5rem;
   }
   @include if-large-screen-upper {
-    font-size: 1.8rem;
+    font-size: 3rem;
   }
 
   a {
