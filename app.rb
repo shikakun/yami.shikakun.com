@@ -81,6 +81,27 @@ helpers do
       ((diff + 180000) / (60 * 60 * 24 * 7)).to_i.to_s + '週間後に'
     end
   end
+
+  def wow
+    [
+      'あっ', 'アッ',
+      'うっ', 'ウッ',
+      'えっ', 'エッ',
+      'おっ', 'オッ',
+      'わっ', 'ワッ',
+      'ああっ', 'アアッ',
+      'ううっ', 'ウウッ',
+      'うわっ', 'ウワッ',
+      'おわっ', 'オワッ',
+      'ぎゃっ', 'ギャッ',
+      'ぐわっ', 'グワッ',
+      'うわーっ', 'ウワーッ',
+      'あああっ', 'アアアッ',
+      'ん!?', 'ン!?',
+      'びっくりした。',
+      'ああ、びっくりした。'
+    ].sample
+  end
 end
 
 class Activity < ActiveRecord::Base
@@ -108,17 +129,17 @@ get '/hikari', '/yami' do
 
   if param === '/hikari'
     irdata = IRKit::App::Data['IR']['lighting_on']
-    tweet = "@#{session[:screen_name]} が鹿の自宅の照明を点けました"
+    tweet = "点けました"
     Activity.create({screen_name: session[:screen_name], status: 'hikari'})
   elsif param === '/yami'
     irdata = IRKit::App::Data['IR']['lighting_off']
-    tweet = "@#{session[:screen_name]} が鹿の自宅の照明を消しました"
+    tweet = "消しました"
     Activity.create({screen_name: session[:screen_name], status: 'yami'})
   else
     redirect '/'
   end
 
-  twitter_client.update(tweet)
+  twitter_client.update("#{wow} @#{session[:screen_name]} が鹿の自宅の照明を#{tweet}")
 
   if ENV['RACK_ENV'] === 'development'
     redirect '/'
