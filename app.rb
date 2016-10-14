@@ -10,6 +10,13 @@ require 'irkit'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'sqlite3:db/development.db')
 
+twitter_client = Twitter::REST::Client.new do |config|
+  config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
+  config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
+  config.access_token        = ENV['TWITTER_SHIKAKUN_TOKEN']
+  config.access_token_secret = ENV['TWITTER_SHIKAKUN_TOKEN_SECRET']
+end
+
 configure do
   Dotenv.load
 
@@ -111,12 +118,6 @@ get '/hikari', '/yami' do
     redirect '/'
   end
 
-  twitter_client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-    config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-    config.access_token        = ENV['TWITTER_SHIKAKUN_TOKEN']
-    config.access_token_secret = ENV['TWITTER_SHIKAKUN_TOKEN_SECRET']
-  end
   twitter_client.update(tweet)
 
   if ENV['RACK_ENV'] === 'development'
@@ -181,7 +182,9 @@ post '/admin/:action' do |action|
   end
 
   if action === 'new'
-    Brother.create({:screen_name => params[:screen_name]})
+    screen_name = params[:screen_name]
+    Brother.create({screen_name: screen_name})
+    twitter_client.update("@#{screen_name} が鹿に100円を払いました")
   elsif action === 'delete'
     Brother.find(params[:id]).destroy
   end
