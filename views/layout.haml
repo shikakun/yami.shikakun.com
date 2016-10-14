@@ -5,8 +5,27 @@
     %title
       yami.shikakun.com
     %meta{name: 'viewport', content: 'width=device-width'}
+    %meta{property: 'og:title', content: 'yami.shikakun.com'}
+    %meta{property: 'og:type', content: 'website'}
+    %meta{property: 'og:url', content: 'https://yami.shikakun.com/'}
+    %meta{property: 'og:image', content: 'https://yami.shikakun.com/images/og-image.jpg'}
+    %meta{property: 'og:description', content: 'インターネット ヤミ市 東京 2016 で @shikakun に 100 円払うと、鹿の自宅の照明を点けたり消したりできます。'}
+    %meta{property: 'og:site_name', content: 'yami.shikakun.com'}
+    %meta{name: 'twitter:card', content: 'sumarry'}
+    %meta{name: 'twitter:title', content: 'https://yami.shikakun.com/'}
+    %meta{name: 'twitter:description', content: 'インターネット ヤミ市 東京 2016 で @shikakun に 100 円払うと、鹿の自宅の照明を点けたり消したりできます。'}
     %link{rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:900'}
     %link{rel: 'stylesheet', href: 'style.css'}
+    %link{rel: 'apple-touch-icon', href: '/apple-touch-icon.png'}
+    %link{rel: 'icon', type: 'image/x-icon', href: 'https://yami.shikakun.com/favicon.ico'}
   %body{class: current_status === 'hikari' ? 'is-hikari' : 'is-yami'}
     != yield
     %script{src: 'script.js', async: 'async'}
+    %script
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-20528252-15', 'auto');
+      ga('send', 'pageview');
