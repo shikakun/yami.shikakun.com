@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require "sinatra/reloader" if development?
-require 'sinatra/flash'
 require 'active_record'
 require 'hamlit'
 require 'dotenv'
@@ -120,8 +119,6 @@ get '/hikari', '/yami' do
   else
     redirect '/'
   end
-
-  flash[:message] = message
 
   if ENV['RACK_ENV'] === 'development'
     redirect '/'
