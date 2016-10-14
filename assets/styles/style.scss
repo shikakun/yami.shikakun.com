@@ -27,7 +27,7 @@ body {
       background-image: url(/images/hikari@2x.jpg);
     }
     @include if-medium-screen-upper {
-      background-image: url(/images/hikari@2x.jpg);
+      background-image: url(/images/hikari@3x.jpg);
     }
   }
 
@@ -37,7 +37,7 @@ body {
       background-image: url(/images/yami@2x.jpg);
     }
     @include if-medium-screen-upper {
-      background-image: url(/images/yami@2x.jpg);
+      background-image: url(/images/yami@3x.jpg);
     }
   }
 
