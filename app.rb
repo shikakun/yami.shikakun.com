@@ -102,6 +102,26 @@ helpers do
       'ああ、びっくりした。'
     ].sample
   end
+
+  def face
+    [
+      'へらへらしながら', 'ヘラヘラしながら',
+      'にやにやしながら', 'ニヤニヤしながら',
+      '半笑いで',
+      '爆笑しながら',
+      '真顔で',
+      '偉そうに',
+      'ふつうに', '普通に',
+      'ゆっくりと',
+      '乱暴に',
+      'そっと',
+      '泣きながら',
+      'ブチ切れて',
+      'なんとなく',
+      '意味もなく',
+      'なにがおもしろいのか'
+    ].sample
+  end
 end
 
 class Activity < ActiveRecord::Base
@@ -126,20 +146,25 @@ get '/hikari', '/yami' do
   end
 
   param = request.path_info
+  screen_name = session[:screen_name]
 
   if param === '/hikari'
     irdata = IRKit::App::Data['IR']['lighting_on']
     tweet = "点けました"
-    Activity.create({screen_name: session[:screen_name], status: 'hikari'})
+    Activity.create({screen_name: screen_name, status: 'hikari'})
   elsif param === '/yami'
     irdata = IRKit::App::Data['IR']['lighting_off']
     tweet = "消しました"
-    Activity.create({screen_name: session[:screen_name], status: 'yami'})
+    Activity.create({screen_name: screen_name, status: 'yami'})
   else
     redirect '/'
   end
 
-  twitter_client.update("#{wow} @#{session[:screen_name]} が鹿の自宅の照明を#{tweet}")
+  if screen_name === 'shikakun'
+    twitter_client.update("@shikakun が#{face}自宅の照明を#{tweet}")
+  else
+    twitter_client.update("#{wow} @#{screen_name} が鹿の自宅の照明を#{tweet}")
+  end
 
   if ENV['RACK_ENV'] === 'development'
     redirect '/'
