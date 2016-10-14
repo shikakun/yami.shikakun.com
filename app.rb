@@ -184,7 +184,9 @@ post '/admin/:action' do |action|
   if action === 'new'
     screen_name = params[:screen_name]
     Brother.create({screen_name: screen_name})
-    twitter_client.update("@#{screen_name} が鹿に100円を払いました")
+    unless screen_name === 'shikakun'
+      twitter_client.update("@#{screen_name} が鹿に100円を払いました")
+    end
   elsif action === 'delete'
     Brother.find(params[:id]).destroy
   end
