@@ -7,6 +7,6 @@
     %meta{name: 'viewport', content: 'width=device-width'}
     %link{rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:900'}
     %link{rel: 'stylesheet', href: 'style.css'}
-  %body
+  %body{class: current_status === 'hikari' ? 'is-hikari' : 'is-yami'}
     != yield
     %script{src: 'script.js', async: 'async'}
