@@ -3,9 +3,9 @@
 @import 'foundation/mixin/media-queries';
 
 :root {
-  font-family: -apple-system, Segoe UI, sans-serif;
-  font-feature-settings: 'kern' 1, 'lnum' 1, 'pnum' 1;
   font-size: 62.5%;
+  font-family: 'Roboto', -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'kern' 1, 'lnum' 1, 'pnum' 1;
 }
 
 body {
@@ -67,5 +67,77 @@ p {
   a {
     color: #000;
     border-bottom: 1px solid currentColor;
+  }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+
+  &__at-mark {
+    padding: 0 0.25em;
+    font-size: 4rem;
+  }
+
+  &__textfield {
+    width: 60rem;
+
+    input {
+      width: 100%;
+      height: 8rem;
+      padding: 0 0.75em;
+      font-size: 4rem;
+      border-radius: 3px;
+      font-family: 'Roboto', -apple-system, 'Segoe UI', sans-serif;
+      border: 1px solid #ccc;
+      outline: 0;
+      appearance: none;
+      transition-duration: padding, border-color;
+      transition-duration: 1s;
+      transition-timing-function: ease;
+      &:focus {
+        padding: 0;
+        border-color: transparent;
+      }
+    }
+  }
+
+  &__action {
+    input {
+      display: inline-block;
+      height: 8rem;
+      line-height: 8rem;
+      padding: 0 1em;
+      font-size: 2rem;
+      background: transparent;
+      border: 0;
+      text-decoration: underline;
+      appearance: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.brother {
+  width: 60rem;
+  padding-bottom: 8rem;
+  margin: 0 auto;
+  font-size: 4rem;
+
+  &__item {
+    position: relative;
+    height: 8rem;
+    line-height: 8rem;
+  }
+
+  &__at-mark {
+    position: absolute;
+    top: 0;
+    left: -4.5rem;
+    height: 8rem;
+    line-height: 8rem;
   }
 }
