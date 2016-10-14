@@ -21,7 +21,9 @@ $(function() {
         'value' : $(this).attr('data-brother-id')
       });
 
-      $form.append($input).submit().remove();
+      $form.append($input);
+      $('body').append($form);
+      $form.submit().remove();
     }
   });
 });
