@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/contrib'
 require "sinatra/reloader" if development?
-require 'sinatra/flash'
 require 'active_record'
 require 'hamlit'
 require 'dotenv'
@@ -42,15 +41,37 @@ helpers do
   end
 
   def current_status
-    Activity.last.status
+    Activity.last.status if Activity.last
   end
 
   def japanese_status(status)
     case status
     when 'hikari'
-      '点けました'
+      '点け'
     when 'yami'
-      '消しました'
+      '消し'
+    end
+  end
+
+  def compare_time(before, current)
+    diff = current.to_i - before.to_i
+    case diff
+    when 0
+      'あとすぐ'
+    when 1..59
+      diff.to_s + '秒後に'
+    when 60..3540
+      (diff / 60).to_i.to_s + '分後に'
+    when 3541..82800
+      ((diff + 99) / 3600).to_i.to_s + '時間後に'
+    when 82801..172000
+      '翌日に'
+    when 172001..518400
+      ((diff + 800) / (60 * 60 * 24)).to_i.to_s + '日後に'
+    when 518400..1036800
+      '翌週に'
+    else
+      ((diff + 180000) / (60 * 60 * 24 * 7)).to_i.to_s + '週間後に'
     end
   end
 
@@ -71,7 +92,7 @@ class Brother < ActiveRecord::Base
 end
 
 get '/' do
-  @activities = Activity.order("id desc").all
+  @activities = Activity.order("id asc").all
   haml :index
 end
 
@@ -99,7 +120,9 @@ get '/hikari', '/yami' do
     redirect '/'
   end
 
-  flash[:message] = message
+  if ENV['RACK_ENV'] === 'development'
+    redirect '/'
+  end
 
   irkit = IRKit::InternetAPI.new(clientkey: ENV['IRKIT_CLIENTKEY'], deviceid: ENV['IRKIT_DEVICEID'])
   res = irkit.post_messages(irdata)

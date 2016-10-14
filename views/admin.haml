@@ -1,19 +1,16 @@
-%ul
-  - @brothers.each do |brother|
-    %li
-      %span
-        #{brother.id}:&nbsp;
-      %span
-        = brother.screen_name
-      %span<>
-        (
-      %span<>
-        %form{action: '/admin/delete', method: 'post', style: 'display: inline-block;'}
-          %input{type: 'hidden', name: 'id', value: brother.id}
-          %input{type: 'submit', value: 'Remove'}
-      %span<>
-        )
+%form.form{action: '/admin/new', method: 'post'}
+  %label.form__at-mark{for: 'screen-name'}
+    @
+  %div.form__textfield
+    %input#screen-name{type: 'text', name: 'screen_name', placeholder: 'twitter_account', autocomplete: 'off'}
+  %div.form__action
+    %input{type: 'submit', value: 'enter'}
 
-%form{action: '/admin/new', method: 'post'}
-  %input{type: 'text', name: 'screen_name'}
-  %input{type: 'submit', value: 'Add'}
+%ul.brother
+  - @brothers.each do |brother|
+    %li.brother__item
+      %span.brother__at-mark
+        @
+      = brother.screen_name
+      %span.brother__delete-button.js-delete-brother{'data-brother-id': brother.id}
+        x
