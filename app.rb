@@ -187,6 +187,10 @@ get '/kanekure' do
   haml :kanekure
 end
 
+get '/url' do
+  haml :url
+end
+
 get '/join' do
   redirect '/auth/twitter'
 end
