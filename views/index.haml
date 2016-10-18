@@ -1,9 +1,11 @@
 - if current_status === 'hikari'
   %div.switch.switch--hikari
-    %a.switch__button{href: '/yami'}
+    - if running?
+      %a.switch__button{href: '/yami'}
 - else
   %div.switch.switch--yami
-    %a.switch__button{href: '/hikari'}
+    - if running?
+      %a.switch__button{href: '/hikari'}
 
 %p.lyric
   - before_time = ''

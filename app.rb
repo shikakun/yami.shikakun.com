@@ -31,6 +31,10 @@ configure do
 end
 
 helpers do
+  def running?
+    false
+  end
+
   def logged_in?
     session[:twitter_oauth]
   end
@@ -139,6 +143,8 @@ get '/' do
 end
 
 get '/hikari', '/yami' do
+  redirect '/' unless running?
+
   unless logged_in?
     session[:redirect] = request.url
     redirect '/join'
@@ -184,6 +190,7 @@ get '/hikari', '/yami' do
 end
 
 get '/kanekure' do
+  redirect '/' unless running?
   redirect '/' unless logged_in?
   redirect '/' if paid?
 
@@ -238,7 +245,9 @@ post '/admin/:action' do |action|
     screen_name = params[:screen_name]
     Brother.create({screen_name: screen_name})
     unless screen_name === 'shikakun'
-      twitter_client.update("@#{screen_name} が鹿に100円を払いました")
+      if running?
+        twitter_client.update("@#{screen_name} が鹿に100円を払いました")
+      end
     end
   elsif action === 'delete'
     Brother.find(params[:id]).destroy
